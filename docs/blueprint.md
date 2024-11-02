@@ -26,6 +26,8 @@ so that I can practice trading strategies and see how market fluctuations impact
 I want to monitor my portfolio in real time,
 so that I can make informed decisions about when to buy or sell stocks.
 
+4. **Yue Cheng**: I won a million in the lottery, and I plan to use it for investment. However, before making any real transactions, I would like to conduct some practice. I am interested in using this program to register an account, log in, and receive an initial sum of startup funds that will allow me to simulate buying and selling stocks. I hope the software will provide basic stock information, such as ticker symbols, prices, and available quantities.
+
 ## Proposed Entities for the Domain
 
 1. User
