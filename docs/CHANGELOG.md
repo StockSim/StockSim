@@ -15,3 +15,4 @@
 - Implemented entities for user, portfolio, and transaction.
 - Add synchronization checks and null checks in StockMarket
 - Java version is set to 21
+- Modify `Portfolio` constructor to match the optional return value of `StockMarket.getStock`

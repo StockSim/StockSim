@@ -17,17 +17,20 @@ public class Portfolio {
         StockMarket stockMarket = StockMarket.Instance();
 
         stocks.forEach((ticker, quantity) -> {
-            Stock stock = stockMarket.getStock(ticker);
-            if (stock != null) {
-                double price = stock.getPrice();
-                if (price > 0) {
-                    this.stocks.put(ticker, new UserStock(stock, price, quantity));
-                } else {
-                    throw new IllegalArgumentException("Invalid price for stock: " + ticker);
+            // decompose Optional<Stock>
+            stockMarket.getStock(ticker).ifPresentOrElse(
+                stock -> {
+                    double price = stock.getPrice();
+                    if (price > 0) {
+                        this.stocks.put(ticker, new UserStock(stock, price, quantity));
+                    } else {
+                        throw new IllegalArgumentException("Invalid price for stock: " + ticker);
+                    }
+                },
+                () -> {
+                    throw new IllegalArgumentException("No stock found for ticker: " + ticker);
                 }
-            } else {
-                throw new IllegalArgumentException("No stock found for ticker: " + ticker);
-            }
+            );
         });
     }
 
