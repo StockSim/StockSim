@@ -14,3 +14,4 @@
 - Implemented entities for stock and stock market.
 - Implemented entities for user, portfolio, and transaction.
 - Add synchronization checks and null checks in StockMarket
+- Java version is set to 21
