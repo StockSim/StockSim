@@ -147,3 +147,6 @@ replay_pid*
 
 # mac
 **/.DS_Store
+
+# api
+*src/main/java/api/.env_local

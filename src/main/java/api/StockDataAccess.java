@@ -5,16 +5,43 @@ import com.crazzyghost.alphavantage.Config;
 import com.crazzyghost.alphavantage.timeseries.response.QuoteResponse;
 import com.crazzyghost.alphavantage.timeseries.response.TimeSeriesResponse;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.io.IOException;
 import java.io.File;  // Import the File class
 import java.io.FileNotFoundException;  // Import this class to handle errors
 import java.util.Scanner; // Import the Scanner class to read text files
 
-
 public class StockDataAccess implements IStockDataAccess {
+    private List<String> fileData = new ArrayList<>();
+
+    private StockDataAccess() {
+        this("tickerDataDemo.txt");
+    }
+
+    public StockDataAccess(String fileName) {
+
+        // TODO: return String of data seperated by commas to fit API required format
+
+        try {
+            InputStream inputStream = getClass().getResourceAsStream("/tickerDataDemo.txt");
+            if (inputStream == null) {
+                throw new FileNotFoundException("Resource not found.");
+            }
+            Scanner scanner = new Scanner(inputStream);
+            while (scanner.hasNextLine()) {
+                String l = scanner.nextLine();
+                fileData.add(l);
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
+
 
     public void handleSuccess(TimeSeriesResponse response) {
         System.out.println("Successfully retrived data");
@@ -22,24 +49,6 @@ public class StockDataAccess implements IStockDataAccess {
 
     public void handleFailure(AlphaVantageException error) {
         System.out.println("Error retrived data");
-    }
-
-    private List<String> readDataFile(String fileName) {
-        // TODO: return String of data seperated by commas to fit API required format
-        List<String> data = new ArrayList<>();
-        try {
-            File myFile = new File(fileName);
-            Scanner scanner = new Scanner(myFile);
-            while (scanner.hasNextLine()) {
-                String l = scanner.nextLine();
-                data.add(l);
-            }
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-        return data;
     }
 
     /**
@@ -55,7 +64,6 @@ public class StockDataAccess implements IStockDataAccess {
 
         // TODO: Generate tickers list based on tickerData file or
         //  "http://nasdaqtrader.com/dynamic/SymDir/nasdaqlisted.txt" for only US market
-        List<String> tickers = readDataFile(tickerDataFile);
 
         // Init API
         final Config cfg = Config.builder()
@@ -63,19 +71,41 @@ public class StockDataAccess implements IStockDataAccess {
                 .timeOut(10)
                 .build();
         AlphaVantage.api().init(cfg);
-
+        System.out.println(fileData);
         // API calls
-        for (String ticker : tickers) {
-            QuoteResponse data =
-                    AlphaVantage.api()
-                            .timeSeries()
-                            .quote()
-                            .forSymbol(ticker)
-                            .fetchSync();
-//                .onSuccess(e->handleSuccess((TimeSeriesResponse) e))
-//                .onFailure(e->handleFailure(e))
-            System.out.println("Ticker: " + ticker + ", Market Price: " + data.getPrice() + ", Floating Stock: " + data.getVolume());
-        }
+//        for (String ticker : fileData) {
+//            QuoteResponse data =
+//                    AlphaVantage.api()
+//                            .timeSeries()
+//                            .quote()
+//                            .forSymbol(ticker)
+//                            .fetchSync();
+////                            .onSuccess(e->handleSuccess((TimeSeriesResponse) e))
+////                            .onFailure(e->handleFailure(e))
+//            System.out.println("Ticker: " + ticker + ", Market Price: " + data.getPrice() + ", Floating Stock: " + data.getVolume());
+//        }
+        QuoteResponse data =
+                AlphaVantage.api()
+                        .timeSeries()
+                        .quote()
+                        .forSymbol(fileData.get(0))
+                        .fetchSync();
+        System.out.println(data.getPrice());
+
+        final Config cfg1 = Config.builder()
+                .key(apiKey)
+                .timeOut(10)
+                .build();
+        AlphaVantage.api().init(cfg1);
+
+        QuoteResponse data1 =
+                AlphaVantage.api()
+                        .timeSeries()
+                        .quote()
+                        .forSymbol(fileData.get(1))
+                        .fetchSync();
+        System.out.println(data1.getPrice());
+
 
 
 
