@@ -1,6 +1,6 @@
 package entity;
 
-import data_access.IStockDataAccess;
+import api.IStockDataAccess;
 
 import java.util.Map;
 import java.util.Optional;
@@ -46,7 +46,7 @@ public class StockMarket {
         if (dataAccess == null) {
             throw new IllegalStateException("StockMarket has not been initialized with a data access object.");
         }
-        Map<String, Double> prices = dataAccess.getStocks();
+        Map<String, Double> prices = dataAccess.getStockData();
         for (Map.Entry<String, Double> entry : prices.entrySet()) {
             String ticker = entry.getKey();
             double price = entry.getValue();
