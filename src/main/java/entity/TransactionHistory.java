@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * A class representing the transaction history of a user
+ */
 public class TransactionHistory {
 
     private final List<Transaction> transactions;
@@ -24,6 +27,12 @@ public class TransactionHistory {
         return Collections.unmodifiableList(transactions);
     }
 
+    /**
+     * Get the most recent transactions by count
+     *
+     * @param count the number of transactions to get
+     * @return the most recent transactions
+     */
     public List<Transaction> getRecentTransactions(int count) {
         if (count <= 0) {
             return Collections.emptyList();

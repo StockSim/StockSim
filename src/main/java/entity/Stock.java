@@ -1,5 +1,8 @@
 package entity;
 
+/**
+ * A stock entity
+ */
 public class Stock {
 
     private final String ticker;
@@ -18,6 +21,11 @@ public class Stock {
         return price;
     }
 
+    /**
+     * Update the current market price of the stock
+     *
+     * @param price the new price
+     */
     public void updatePrice(double price) {
         this.price = price;
     }

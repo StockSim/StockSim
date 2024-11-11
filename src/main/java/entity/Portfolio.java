@@ -2,7 +2,11 @@ package entity;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
+/**
+ * A class representing a user's portfolio
+ */
 public class Portfolio {
 
     private final Map<String, UserStock> stocks;
@@ -11,14 +15,20 @@ public class Portfolio {
         this.stocks = new HashMap<>();
     }
 
-    /** Constructor for Portfolio class.
-     * Portfolio contains all the stocks a user is holding: tickers -> quantities(position).
-     * @param stocks a map of tickers and the stocks user hold
+    /**
+     * Create a portfolio with the given stocks
+     *
+     * @param stocks the stocks in the portfolio
      */
     public Portfolio(Map<String, UserStock> stocks) {
         this.stocks = new HashMap<>(stocks);
     }
 
+    /**
+     * Get the value of all stocks in the portfolio
+     *
+     * @return the value of all stocks in the portfolio
+     */
     public double getTotalValue() {
         double result = 0.0;
 
@@ -29,9 +39,15 @@ public class Portfolio {
         return result;
     }
 
-    public int getStockQuantity(String ticker) {
-        return stocks.get(ticker).getQuantity();
+    public Optional<UserStock> getUserStock(String ticker) {
+        return Optional.ofNullable(stocks.get(ticker));
     }
 
-    // TODO: add a method to update portfolio
+    public void addStock(UserStock userStock) {
+        stocks.put(userStock.getStock().getTicker(), userStock);
+    }
+
+    public void removeStock(UserStock userStock) {
+        stocks.remove(userStock.getStock().getTicker());
+    }
 }

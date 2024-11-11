@@ -1,5 +1,8 @@
 package entity;
 
+/**
+ * A class representing a stock owned by a user
+ */
 public class UserStock {
 
     private final Stock stock;
@@ -7,10 +10,11 @@ public class UserStock {
     private int quantity;
 
     /**
-     * Constructor for UserStock class.
-     * @param stock: the stock object
-     * @param cost: the cost basis of the stock
-     * @param quantity: the quantity of the stock
+     * Constructor for UserStock class
+     *
+     * @param stock:    the stock object
+     * @param cost:     the average cost of the stock
+     * @param quantity: the quantity of the stock owned by user
      */
     public UserStock(Stock stock, double cost, int quantity) {
         this.stock = stock;
@@ -31,17 +35,17 @@ public class UserStock {
     }
 
     /**
-     * Calculate the total cost spent on this stock.
-     * Not sure what this method does.
-     * @return the total value of the stock in the stock market
+     * Calculate the total cost spent on this stock
+     *
+     * @return the total cost spent on this stock
      */
     public double getPurchasedTotalCost() {
         return cost * quantity;
     }
 
     /**
-     * Calculate the total market value of this stock in the stock market.
-     * This method is used to rank users.
+     * Calculate the total market value of this stock in the stock market
+     *
      * @return the current market value of this stock in the stock market
      */
     public double getCurrentMarketValue() {
@@ -49,14 +53,10 @@ public class UserStock {
     }
 
     /**
-     * Update the cost basis and quantity of the stock, when a transaction is successfully made.
-     * We update a new cost with a weighted average cost method.
-     * @param price: the purchase price of additional shares of the stock
-     *             calculate the weighted average cost of the stock
-     *             Precondition: price >= 0
-     *             Precondition: cost >= 0
-     * @param quantity: the new quantity of the stock
-     *             quantity could be positive(Buy) or negative(Sell)
+     * Update the average cost and quantity of the stock
+     *
+     * @param price:    the price of the stock
+     * @param quantity: the quantity of the stock
      */
     public void updateUserStock(double price, int quantity) {
         this.cost = (this.cost * this.quantity + price * quantity) / (quantity + this.quantity);
