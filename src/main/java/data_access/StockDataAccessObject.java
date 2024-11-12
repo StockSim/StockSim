@@ -39,7 +39,7 @@ public class StockDataAccessObject implements IStockDataAccess {
         Map<String, Stock> stocks = new HashMap<>();
 
         try {
-            // Reads content in config/tickers text file
+            // Reads content in config/tickers text file that stores 30 tickers
             InputStream inputStream = getClass().getResourceAsStream("/tickers.txt");
 
             if (inputStream == null) {
@@ -48,13 +48,17 @@ public class StockDataAccessObject implements IStockDataAccess {
             Scanner scanner = new Scanner(inputStream);
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
+                // Generates new url for each token
                 String url = String.format("%s/quote?symbol=%s&token=%s", BASE_URL, line, apiKey);
+
                 Request request = new Request.Builder().url(url).build();
                 try (Response response = client.newCall(request).execute()) {
                     if (response.isSuccessful()) {
+                        // Takes responseBody and converts relevant data into stock object
                         String responseBody = response.body().string();
                         JSONObject jsonObject = new JSONObject(responseBody);
                         Stock stock = new Stock(line, jsonObject.getDouble("c"));
+
                         stocks.put(line, stock);
                     }
                 } catch (IOException e) {
