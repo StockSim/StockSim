@@ -56,10 +56,10 @@ public class StockMarket {
         }
         List<String> tickers = new ArrayList<>();
         tickers.add("TSLA");
-        Map<String, Double> prices = dataAccess.getStocks(tickers);
-        for (Map.Entry<String, Double> entry : prices.entrySet()) {
+        Map<String, Stock> prices = dataAccess.getStocks();
+        for (Map.Entry<String, Stock> entry : prices.entrySet()) {
             String ticker = entry.getKey();
-            double price = entry.getValue();
+            double price = entry.getValue().getPrice();
             // create a new map entry if stock does not exist, and then update price
             stocks.computeIfAbsent(ticker, k -> new Stock(ticker, price)).updatePrice(price);
         }

@@ -1,7 +1,0 @@
-AMZN
-APPL
-INTC
-NVDA
-TSLA
-
-// create a config folder, add a file called TickerData for set tickers.
