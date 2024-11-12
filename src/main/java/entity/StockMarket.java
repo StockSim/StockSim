@@ -2,6 +2,8 @@ package entity;
 
 import data_access.IStockDataAccess;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -52,7 +54,9 @@ public class StockMarket {
         if (dataAccess == null) {
             throw new IllegalStateException("StockMarket has not been initialized with a data access object.");
         }
-        Map<String, Double> prices = dataAccess.getStocks();
+        List<String> tickers = new ArrayList<>();
+        tickers.add("TSLA");
+        Map<String, Double> prices = dataAccess.getStocks(tickers);
         for (Map.Entry<String, Double> entry : prices.entrySet()) {
             String ticker = entry.getKey();
             double price = entry.getValue();

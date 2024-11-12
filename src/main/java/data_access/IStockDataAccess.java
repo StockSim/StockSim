@@ -1,5 +1,6 @@
 package data_access;
 
+import java.util.List;
 import java.util.Map;
 
 public interface IStockDataAccess {
@@ -19,5 +20,5 @@ public interface IStockDataAccess {
      * It should contain all stocks in the database
      */
     // TODO: get stocks from a list of tickers
-    Map<String, Double> getStocks();
+    Map<String, Double> getStocks(List<String> tickers);
 }
