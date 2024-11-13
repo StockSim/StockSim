@@ -37,5 +37,10 @@ Moved `ValidationException` into a separate class in utility.
 - Removed outdated classes and methods that are incompatible with current codebase version
 - Updated maven configuration with unit test and api request dependencies
 - Implemented the frontend framework
+- Implemented StockDataAccess to retrieve current market price for set tickers
+- Modified `StockMarket` to utilize new IStockDataAccess return type
+- Updated maven configuration with api request dependencies
+- Added config resource file for 30 preset ticker names
+- Modified `InMemoryStockDataAccessObject` to utilize new IStockDataAccess return type
 
 ### Bug Fixes
