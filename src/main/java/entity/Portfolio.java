@@ -7,6 +7,7 @@ import java.util.Optional;
 /**
  * A class representing a user's portfolio
  */
+// TODO: update regularly
 public class Portfolio {
 
     private final Map<String, UserStock> stocks;

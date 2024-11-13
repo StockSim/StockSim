@@ -3,6 +3,7 @@ package use_case.execute_buy;
 import entity.*;
 
 import java.util.Date;
+import utility.exceptions.ValidationException;
 
 /**
  * The Execute Buy Interactor.
@@ -28,18 +29,22 @@ public class ExecuteBuyInteractor implements ExecuteBuyInputBoundary {
             int quantity = data.quantity();
             Stock stock = StockMarket.Instance().getStock(ticker).orElseThrow(StockNotFoundException::new);
 
-            double totalCost = stock.getPrice() * quantity;
+            // Calculate some values for this transaction
+            double currentPrice = stock.getPrice();
+            double totalCost = currentPrice * quantity;
+
             if (isBalanceSufficient(currentUser, totalCost)) {
                 // Deduct balance
                 currentUser.deductBalance(totalCost);
 
                 // Update portfolio
                 Portfolio portfolio = currentUser.getPortfolio();
-                updateOrAddStockToPortfolio(portfolio, stock, quantity);
+                updateOrAddStockToPortfolio(portfolio, stock, quantity, currentPrice);
 
                 // Add transaction
+                // TODO: timestamp synchronization
                 Date timestamp = new Date();
-                Transaction transaction = new Transaction(timestamp, ticker, quantity, stock.getPrice(), "buy");
+                Transaction transaction = new Transaction(timestamp, ticker, quantity, currentPrice, "buy");
                 currentUser.getTransactionHistory().addTransaction(transaction);
 
                 // Prepare success view
@@ -50,7 +55,7 @@ public class ExecuteBuyInteractor implements ExecuteBuyInputBoundary {
             } else {
                 throw new InsufficientBalanceException();
             }
-        } catch (ExecuteBuyDataAccessInterface.ValidationException e) {
+        } catch (ValidationException e) {
             outputPresenter.prepareValidationExceptionView();
         } catch (StockNotFoundException e) {
             outputPresenter.prepareStockNotFoundExceptionView();
@@ -63,11 +68,11 @@ public class ExecuteBuyInteractor implements ExecuteBuyInputBoundary {
         return user.getBalance() >= totalCost;
     }
 
-    private void updateOrAddStockToPortfolio(Portfolio portfolio, Stock stock, int quantity) {
+    private void updateOrAddStockToPortfolio(Portfolio portfolio, Stock stock, int quantity, double currentPrice) {
         portfolio.getUserStock(stock.getTicker())
                 .ifPresentOrElse(
-                        existingStock -> existingStock.updateUserStock(stock.getPrice(), quantity),
-                        () -> portfolio.addStock(new UserStock(stock, stock.getPrice(), quantity))
+                        existingStock -> existingStock.updateUserStock(currentPrice, quantity),
+                        () -> portfolio.addStock(new UserStock(stock, currentPrice, quantity))
                 );
     }
 

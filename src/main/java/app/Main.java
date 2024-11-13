@@ -2,22 +2,18 @@ package app;
 
 import javax.swing.*;
 
-/**
- * The main class of the application
- */
 public class Main {
-    /**
-     * The main method of the application
-     *
-     * @param args: the arguments passed to the application
-     */
     public static void main(String[] args) {
-        final AppBuilder appBuilder = new AppBuilder();
-        final JFrame application = appBuilder.addTradeSimulation().build();
+        AppBuilder appBuilder = new AppBuilder();
 
-        appBuilder.showTradeSimulation();
+        // Register and set up all panels
+        appBuilder.addAuthenticationPanels()
+                .addDashboardPanel("User123", 1000.0, 5000.0)
+                .addTradeSimulationPanel()
+                .addDialogComponent();
 
-        application.pack();
+        // Build the application frame and show LogInPanel by default
+        JFrame application = appBuilder.build();
         application.setVisible(true);
     }
 }

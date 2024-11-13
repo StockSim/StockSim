@@ -1,4 +1,8 @@
-# Trading simulation app - helps users practice before making real trades.
+# Trading simulation app - helps users practice before making real trades
+
+> **WARNING:** This documentation version is deprecated.
+>
+> Please review the `README.md` file in root directory for latest updates.
 
 Within our project documentation, the features in black are the basic functionalities we need to implement first. These are our priorities and must be fully functional for our initial version. The features in gray are advanced options that we can consider adding later. These advanced features will enhance our app's functionality and user experience but are not critical for the initial launch. The first three pages explain briefly how the app works. Starting on page 4, we will give detailed descriptions of the mechanisms for each part.
 

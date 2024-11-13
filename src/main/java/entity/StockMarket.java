@@ -2,8 +2,6 @@ package entity;
 
 import data_access.IStockDataAccess;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -11,6 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * A singleton class representing the stock market
  */
+// TODO: lock the stock market when updating stock prices
 public class StockMarket {
 
     // thread-safe Singleton instance
@@ -50,16 +49,15 @@ public class StockMarket {
     /**
      * Update the stock prices in the stock market
      */
+    // TODO: set interval for updating stock prices
     public void updateStockPrices() {
         if (dataAccess == null) {
             throw new IllegalStateException("StockMarket has not been initialized with a data access object.");
         }
-        List<String> tickers = new ArrayList<>();
-        tickers.add("TSLA");
-        Map<String, Stock> prices = dataAccess.getStocks();
-        for (Map.Entry<String, Stock> entry : prices.entrySet()) {
+        Map<String, Double> prices = dataAccess.getStocks();
+        for (Map.Entry<String, Double> entry : prices.entrySet()) {
             String ticker = entry.getKey();
-            double price = entry.getValue().getPrice();
+            double price = entry.getValue();
             // create a new map entry if stock does not exist, and then update price
             stocks.computeIfAbsent(ticker, k -> new Stock(ticker, price)).updatePrice(price);
         }

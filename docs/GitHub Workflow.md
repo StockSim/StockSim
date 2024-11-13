@@ -1,6 +1,6 @@
 # StockSim Development Team Workflow Overview
 
-This documentation provides a standard workflow and documentation convention for commiting changes on GitHub for StockSim development team.
+This documentation provides a standard workflow and documentation convention for commiting changes on GitHub for **StockSim** development team.
 
 In the workflow instruction, I'm showing Git commands on command line. Even though you are free to use IDE tools if you prefer as long as following the same workflow, I do suggest practice working with command line as this is what we will be using in the industry (as works much faster once you get familiar).
 
@@ -50,5 +50,5 @@ After pushing changes to your remote repository, you can make a pull request.
    7. `chores: ` trivial changes that do not fit into the above categories. Example: `chores: fix CheckStyle issues`
 2. Summarize the proposed change in a few bullet points in the pull request message.
 3. Review and complete the checklist in the pull request template.
-4. `Request a review` from another team member. The reviewer should ideally be the previous member working on the feature and should have a good understanding of the relevant part of codebase.
+4. Request a review from another team member. The reviewer should ideally be the previous member working on the feature and should have a good understanding of the relevant part of codebase.
 5. Once the reviewer receives review request, they should carefully review the submitted code according to the reviewer checklist and leave any comments as correction advice.

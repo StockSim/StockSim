@@ -5,7 +5,7 @@
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
-# Idea stuff
+# Idea
 .idea/
 
 # User-specific stuff
@@ -148,8 +148,8 @@ replay_pid*
 # mac
 **/.DS_Store
 
-# tokens
+# env
 .env
-.env*.local
-.env*.development
+.env.local
+.env.development
 .env.test
