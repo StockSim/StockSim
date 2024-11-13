@@ -1,22 +1,17 @@
 package data_access;
 
+import entity.Stock;
+
 import java.util.Map;
 
 public class InMemoryStockDataAccessObject implements IStockDataAccess {
-    private Map<String, Double> stocks;
 
     @Override
-    public double getStockPrice(String ticker) {
-        return stocks.get(ticker);
-    }
-
-    @Override
-    public Map<String, Double> getStocks() {
-        Map<String, Double> stocks = new java.util.HashMap<>();
-        stocks.put("XXXX", 100.0);
-        stocks.put("YYYY", 200.0);
-        stocks.put("ZZZZ", 300.0);
-        this.stocks = stocks;
+    public Map<String, Stock> getStocks() {
+        Map<String, Stock> stocks = new java.util.HashMap<>();
+        stocks.put("XXXX", new Stock("XXXX", 100.0));
+        stocks.put("YYYY", new Stock("YYYY", 200.0));
+        stocks.put("ZZZZ", new Stock("ZZZZ", 300.0));
         return stocks;
     }
 }

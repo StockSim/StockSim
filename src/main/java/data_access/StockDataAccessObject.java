@@ -48,17 +48,17 @@ public class StockDataAccessObject implements IStockDataAccess {
             Scanner scanner = new Scanner(inputStream);
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
-                // Generates new url for each token
+                // Generates new url for each ticker
                 String url = String.format("%s/quote?symbol=%s&token=%s", BASE_URL, line, apiKey);
 
                 Request request = new Request.Builder().url(url).build();
                 try (Response response = client.newCall(request).execute()) {
                     if (response.isSuccessful()) {
-                        // Takes responseBody and converts relevant data into stock object
                         String responseBody = response.body().string();
                         JSONObject jsonObject = new JSONObject(responseBody);
-                        Stock stock = new Stock(line, jsonObject.getDouble("c"));
 
+                        // Creates a Stock object with ticker name and current market price
+                        Stock stock = new Stock(line, jsonObject.getDouble("c"));
                         stocks.put(line, stock);
                     }
                 } catch (IOException e) {

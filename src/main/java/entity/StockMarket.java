@@ -54,10 +54,10 @@ public class StockMarket {
         if (dataAccess == null) {
             throw new IllegalStateException("StockMarket has not been initialized with a data access object.");
         }
-        Map<String, Double> prices = dataAccess.getStocks();
-        for (Map.Entry<String, Double> entry : prices.entrySet()) {
+        Map<String, Stock> prices = dataAccess.getStocks();
+        for (Map.Entry<String, Stock> entry : prices.entrySet()) {
             String ticker = entry.getKey();
-            double price = entry.getValue();
+            double price = entry.getValue().getPrice();
             // create a new map entry if stock does not exist, and then update price
             stocks.computeIfAbsent(ticker, k -> new Stock(ticker, price)).updatePrice(price);
         }
