@@ -6,6 +6,8 @@ import interface_adapter.execute_buy.ExecuteBuyController;
 import interface_adapter.execute_buy.ExecuteBuyPresenter;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
+import interface_adapter.logout.LogoutController;
+import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.view_history.ViewHistoryController;
 import interface_adapter.view_history.ViewHistoryPresenter;
 import use_case.execute_buy.ExecuteBuyDataAccessInterface;
@@ -16,6 +18,9 @@ import use_case.login.LoginDataAccessInterface;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
+import use_case.logout.LogoutInputBoundary;
+import use_case.logout.LogoutInteractor;
+import use_case.logout.LogoutOutputBoundary;
 import use_case.view_history.ViewHistoryDataAccessInterface;
 import use_case.view_history.ViewHistoryInputBoundary;
 import use_case.view_history.ViewHistoryInteractor;
@@ -125,33 +130,21 @@ public class AppBuilder {
 
         // 2. Initialize Presenters
         new LoginPresenter();
+        new LogoutPresenter();
         new ExecuteBuyPresenter();
         new ViewHistoryPresenter();
 
         // 3. Initialize Interactors
-        new LoginInteractor(
-                ServiceManager.Instance().getService(LoginDataAccessInterface.class),
-                ServiceManager.Instance().getService(LoginOutputBoundary.class)
-        );
-        new ExecuteBuyInteractor(
-                ServiceManager.Instance().getService(ExecuteBuyDataAccessInterface.class),
-                ServiceManager.Instance().getService(ExecuteBuyOutputBoundary.class)
-        );
-        new ViewHistoryInteractor(
-                ServiceManager.Instance().getService(ViewHistoryDataAccessInterface.class),
-                ServiceManager.Instance().getService(ViewHistoryOutputBoundary.class)
-        );
+        new LoginInteractor(ServiceManager.Instance().getService(LoginDataAccessInterface.class), ServiceManager.Instance().getService(LoginOutputBoundary.class));
+        new LogoutInteractor(ServiceManager.Instance().getService(LogoutOutputBoundary.class));
+        new ExecuteBuyInteractor(ServiceManager.Instance().getService(ExecuteBuyDataAccessInterface.class), ServiceManager.Instance().getService(ExecuteBuyOutputBoundary.class));
+        new ViewHistoryInteractor(ServiceManager.Instance().getService(ViewHistoryDataAccessInterface.class), ServiceManager.Instance().getService(ViewHistoryOutputBoundary.class));
 
         // 4. Initialize Controllers
-        new LoginController(
-                ServiceManager.Instance().getService(LoginInputBoundary.class)
-        );
-        new ExecuteBuyController(
-                ServiceManager.Instance().getService(ExecuteBuyInputBoundary.class)
-        );
-        new ViewHistoryController(
-                ServiceManager.Instance().getService(ViewHistoryInputBoundary.class)
-        );
+        new LoginController(ServiceManager.Instance().getService(LoginInputBoundary.class));
+        new LogoutController(ServiceManager.Instance().getService(LogoutInputBoundary.class));
+        new ExecuteBuyController(ServiceManager.Instance().getService(ExecuteBuyInputBoundary.class));
+        new ViewHistoryController(ServiceManager.Instance().getService(ViewHistoryInputBoundary.class));
     }
 
     /**

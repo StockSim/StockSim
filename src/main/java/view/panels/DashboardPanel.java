@@ -1,5 +1,7 @@
 package view.panels;
 
+import interface_adapter.logout.LogoutController;
+import utility.ServiceManager;
 import view.FontManager;
 import view.IComponent;
 import view.ViewManager;
@@ -105,23 +107,15 @@ public class DashboardPanel extends JPanel implements IComponent {
     }
 
     private String formatAssetValue(double balance, double portfolio) {
-        return String.format("You have %s in balance and %s in portfolio.",
-                String.format(CURRENCY_FORMAT, balance),
-                String.format(CURRENCY_FORMAT, portfolio));
+        return String.format("You have %s in balance and %s in portfolio.", String.format(CURRENCY_FORMAT, balance), String.format(CURRENCY_FORMAT, portfolio));
     }
 
     private void setupButtonActions() {
-        tradeButton.addActionListener(e ->
-                ViewManager.Instance().broadcastEvent(new SwitchPanelEvent("TradeSimulationPanel"))
-        );
+        tradeButton.addActionListener(e -> ViewManager.Instance().broadcastEvent(new SwitchPanelEvent("TradeSimulationPanel")));
 
-        historyButton.addActionListener(e ->
-                ViewManager.Instance().broadcastEvent(new SwitchPanelEvent("TransactionHistoryPanel"))
-        );
+        historyButton.addActionListener(e -> ViewManager.Instance().broadcastEvent(new SwitchPanelEvent("TransactionHistoryPanel")));
 
-        logoutButton.addActionListener(e ->
-                ViewManager.Instance().broadcastEvent(new SwitchPanelEvent("LogInPanel"))
-        );
+        logoutButton.addActionListener(e -> ServiceManager.Instance().getService(LogoutController.class).execute());
     }
 
     @Override

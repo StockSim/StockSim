@@ -27,4 +27,8 @@ public class ClientSessionManager {
         this.credential = credential;
     }
 
+    public void clearCredential() {
+        this.credential = null;
+    }
+
 }

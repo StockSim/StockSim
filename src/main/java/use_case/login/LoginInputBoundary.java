@@ -1,7 +1,5 @@
 package use_case.login;
 
-import java.util.concurrent.CompletableFuture;
-
 /**
  * Input Boundary for actions which are related to logging in.
  */

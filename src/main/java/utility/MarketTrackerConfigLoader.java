@@ -14,6 +14,10 @@ public class MarketTrackerConfigLoader {
 
     private static final Properties marketTrackerProperties = new Properties();
 
+    static {
+        loadMarketTrackerConfig();
+    }
+
     /**
      * Loads the market tracker configuration from the specified file.
      * This method is called once when the class is initialized.
@@ -32,10 +36,6 @@ public class MarketTrackerConfigLoader {
         } catch (IOException e) {
             throw new RuntimeException("Error loading configuration file", e);
         }
-    }
-
-    static {
-        loadMarketTrackerConfig();
     }
 
     /**
